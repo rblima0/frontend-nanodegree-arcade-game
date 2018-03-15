@@ -164,6 +164,17 @@ var Engine = (function(global) {
         // noop
     }
 
+    document.addEventListener('keyup', function(e) {
+        var allowedKeys = {
+            37: 'left',
+            38: 'up',
+            39: 'right',
+            40: 'down'
+        };
+    
+        player.handleInput(allowedKeys[e.keyCode]);
+    });
+
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -189,7 +200,31 @@ var Engine = (function(global) {
         'images/key.png',
         'images/rock.png',
         'images/selector.png',
-        'images/star.png'
+        'images/star.png',
+        //INIMIGOS TROLLS
+        'images/troll-1.png',
+        'images/troll-2.png',
+        'images/troll-3.png',
+        'images/troll-4.png',
+        'images/troll-5.png',
+        'images/troll-6.png',
+        'images/troll-7.png',
+
+        'images/troll-old-1.png',
+        'images/troll-old-2.png',
+        'images/troll-old-3.png',
+        'images/troll-old-4.png',
+        'images/troll-old-5.png',
+        'images/troll-old-6.png',
+        'images/troll-old-7.png',
+
+        'images/troll-boss-1.png',
+        'images/troll-boss-2.png',
+        'images/troll-boss-3.png',
+        'images/troll-boss-4.png',
+        'images/troll-boss-5.png',
+        'images/troll-boss-6.png',
+        'images/troll-boss-7.png'
     ]);
     Resources.onReady(init);
 

@@ -1,32 +1,18 @@
 // INIMIGO
-var Enemy = function(x, y, originalY, velocity, enemyName) {
+var Enemy = function(x, y, originalY, velocity) {
     this.x = x;
     this.y = y;
     this.originalY = originalY;
     this.velocity = velocity;
-    this.sprite = "images/"+this.enemyName+"-"+this.position+".png";
-    this.position = 1;
-    this.positionTotal = 7;
+    this.sprite = 'images/enemy-bug.png';
     this.collid = false;
-    this.enemyName = enemyName;
 };
 
 Enemy.prototype.update = function(dt) {
-    if (this.x < 470) {
-        if ((parseInt(this.x % 10)) === 0) {
-            this.position++;
-        } if(this.position == this.positionTotal){
-            this.position = 1;
-        }
-    }
-
     this.x += this.velocity * dt;
-    this.sprite = "images/"+this.enemyName+"-"+this.position+".png";
-    
     if (this.x >= 470) {
         this.reset();
-    }
-
+    } 
 };
 
 Enemy.prototype.render = function() {
@@ -105,9 +91,26 @@ function resetGame() {
 
 var allEnemies = [];
 var player = new Player(200, 460);
-var enemyOne = new Enemy(-80, 60, 60, 80, 'troll-boss');
-var enemyTwo = new Enemy(-80, 140, 140, 180, 'troll-old');
-var enemyThree = new Enemy(-80, 220, 220, 60, 'troll');
-var enemyFour = new Enemy(-80, 300, 300, 140, 'troll');
+
+var enemyOne = new Enemy(-80, 60, 60, 80);
+var enemyTwo = new Enemy(-80, 140, 140, 180);
+var enemyThree = new Enemy(-80, 220, 220, 60);
+var enemyFour = new Enemy(-80, 300, 300, 140);
+
+/* var enemyOne = new Enemy(-80, 60, 60, 10);
+var enemyTwo = new Enemy(-80, 140, 140, 10);
+var enemyThree = new Enemy(-80, 220, 220, 20);
+var enemyFour = new Enemy(-80, 300, 300, 10); */
 
 allEnemies.push(enemyOne, enemyTwo, enemyThree, enemyFour);
+
+document.addEventListener('keyup', function(e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+
+    player.handleInput(allowedKeys[e.keyCode]);
+});
