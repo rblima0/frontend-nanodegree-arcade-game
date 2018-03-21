@@ -107,12 +107,12 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/scenario/stone-block.png',   // Top row is water
+                'images/scenario/grass-block.png',   // Row 1 of 3 of stone
+                'images/scenario/grass-block.png',   // Row 2 of 3 of stone
+                'images/scenario/grass-block.png',   // Row 3 of 3 of stone
+                'images/scenario/grass-block.png',   // Row 1 of 2 of grass
+                'images/scenario/grass-forest-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -181,50 +181,50 @@ var Engine = (function(global) {
      */
     Resources.load([
         //CENARIO
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        //PERSONAGENS E INIMIGO
-        'images/enemy-bug.png',
-        'images/char-boy.png',
-        'images/char-cat-girl.png',
-        'images/char-horn-girl.png',
-        'images/char-pink-girl.png',
-        'images/char-princess-girl.png',
-        //GEMAS
-        'images/gem-blue.png',
-        'images/gem-green.png',
-        'images/gem-orange.png',
-        //ITENS VARIADOS
-        'images/heart.png',
-        'images/key.png',
-        'images/rock.png',
-        'images/selector.png',
-        'images/star.png',
+        'images/scenario/stone-block.png',
+        'images/scenario/water-block.png',
+        'images/scenario/grass-block.png',
+        'images/scenario/grass-forest-block.png',
         //INIMIGOS TROLLS
-        'images/troll-1.png',
-        'images/troll-2.png',
-        'images/troll-3.png',
-        'images/troll-4.png',
-        'images/troll-5.png',
-        'images/troll-6.png',
-        'images/troll-7.png',
+        'images/enemies/troll-1.png',
+        'images/enemies/troll-2.png',
+        'images/enemies/troll-3.png',
+        'images/enemies/troll-4.png',
+        'images/enemies/troll-5.png',
+        'images/enemies/troll-6.png',
+        'images/enemies/troll-7.png',
 
-        'images/troll-old-1.png',
-        'images/troll-old-2.png',
-        'images/troll-old-3.png',
-        'images/troll-old-4.png',
-        'images/troll-old-5.png',
-        'images/troll-old-6.png',
-        'images/troll-old-7.png',
+        'images/enemies/troll-old-1.png',
+        'images/enemies/troll-old-2.png',
+        'images/enemies/troll-old-3.png',
+        'images/enemies/troll-old-4.png',
+        'images/enemies/troll-old-5.png',
+        'images/enemies/troll-old-6.png',
+        'images/enemies/troll-old-7.png',
 
-        'images/troll-boss-1.png',
-        'images/troll-boss-2.png',
-        'images/troll-boss-3.png',
-        'images/troll-boss-4.png',
-        'images/troll-boss-5.png',
-        'images/troll-boss-6.png',
-        'images/troll-boss-7.png'
+        'images/enemies/troll-boss-1.png',
+        'images/enemies/troll-boss-2.png',
+        'images/enemies/troll-boss-3.png',
+        'images/enemies/troll-boss-4.png',
+        'images/enemies/troll-boss-5.png',
+        'images/enemies/troll-boss-6.png',
+        'images/enemies/troll-boss-7.png',
+
+        'images/character/boy-down.png',
+        'images/character/boy-up.png',
+        'images/character/boy-left.png',
+        'images/character/boy-right.png',
+
+        'images/character/girl-down.png',
+        'images/character/girl-up.png',
+        'images/character/girl-left.png',
+        'images/character/girl-right.png',
+
+        'images/character/king-down.png',
+        'images/character/king-up.png',
+        'images/character/king-left.png',
+        'images/character/king-right.png'
+
     ]);
     Resources.onReady(init);
 

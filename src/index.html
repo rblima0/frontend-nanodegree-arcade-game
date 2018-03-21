@@ -2,11 +2,42 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Frogger Game</title>
+    <title>Frogger Game - Medieval</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    <h1>Game Frogger</h1>
+    <h1>Medieval Frogger</h1>
+
+     <!-- MODAL DE SELEÇÃO DE PERSONAGEM -->
+    <div class="container">
+        <div class="modalCharacter">
+            <div class="modalCharacterContent">
+                <h2>Medieval Frogger</h2>
+                <h3>Escolha seu personagem</h3>
+                <div class="col">
+                    <div class="row" id="boy">
+                        <p>Guerreiro</p>
+                        <img src="images/character/boy-down.png" alt="Guerreiro">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row" id="girl">
+                        <p>Guerreira</p>
+                        <img src="images/character/girl-down.png" alt="Guerreira">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row" id="king">
+                        <p>Rei</p>
+                        <img src="images/character/king-down.png" alt="Rei">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>

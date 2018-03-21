@@ -4,7 +4,7 @@ var Enemy = function(x, y, originalY, velocity, enemyName) {
     this.y = y;
     this.originalY = originalY;
     this.velocity = velocity;
-    this.sprite = "images/"+this.enemyName+"-"+this.position+".png";
+    this.sprite = "images/enemies/"+this.enemyName+"-"+this.position+".png";
     this.position = 1;
     this.positionTotal = 7;
     this.collid = false;
@@ -21,7 +21,7 @@ Enemy.prototype.update = function(dt) {
     }
 
     this.x += this.velocity * dt;
-    this.sprite = "images/"+this.enemyName+"-"+this.position+".png";
+    this.sprite = "images/enemies/"+this.enemyName+"-"+this.position+".png";
     
     if (this.x >= 470) {
         this.reset();
@@ -46,7 +46,8 @@ Enemy.prototype.reset = function() {
 var Player = function(x, y) {
     this.x = x;
     this.y = y;
-    this.sprite = 'images/char-boy.png';
+    this.character = "boy";
+    this.sprite = "images/character/"+this.character+"-down.png";
     this.collid = false;
 };
 
@@ -60,12 +61,16 @@ Player.prototype.render = function() {
 
 Player.prototype.handleInput = function(code) {
     if((code === 'up') && (this.y > -15)) {
+        this.sprite = "images/character/"+this.character+"-up.png";
         this.y -= 80;
     } else if ((code === 'down') && (this.y < 400)) {
+        this.sprite = "images/character/"+this.character+"-down.png";
         this.y += 80;
     } else if((code === 'left') && (this.x > 0)) {
+        this.sprite = "images/character/"+this.character+"-left.png";
         this.x -= 100;
     } else if((code === 'right') && (this.x < 400)) {
+        this.sprite = "images/character/"+this.character+"-right.png";
         this.x += 100;
     }
 }
@@ -96,6 +101,25 @@ Player.prototype.collision = function(enemyList){
         }
     }
 }
+
+// SELECIONANDO UM PERSONAGEM
+$("#boy").on("click", function(){
+    player.sprite = "images/character/boy-down.png";
+    player.character = 'boy';
+    $('.modalCharacter').css("display", "none");    
+});
+
+$("#girl").on("click", function(){
+    player.sprite = "images/character/girl-down.png";
+    player.character = 'girl';
+    $('.modalCharacter').css("display", "none");    
+});
+
+$("#king").on("click", function(){
+    player.sprite = "images/character/king-down.png";
+    player.character = 'king';
+    $('.modalCharacter').css("display", "none");    
+});
 
 function resetGame() {
     setTimeout(() => {
