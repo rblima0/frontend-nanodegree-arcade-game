@@ -52,6 +52,48 @@ var Engine = (function(global) {
          */
         lastTime = now;
 
+        // FIM DE JOGO
+        if (player.lives === 0) {
+            player.gameOver = true;
+            allEnemies = [];
+            ctx.font = 'bold 14pt Calibri';
+            ctx.globalAlpha = 0.80;
+            ctx.fillStyle = 'black';
+            ctx.fillRect(70, 200, 350, 200);
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = 'white';
+            ctx.fillText('SUAS VIDAS ACABARAM', 150, 270);
+            ctx.fillText('VOCÊ NÃO SALVOU A RAINHA', 130, 295);
+            ctx.font = 'italic 12pt Calibri';
+            ctx.fillStyle = 'white';
+            ctx.fillText('Aperte ENTER para tentar novamente', 117, 340);
+        }
+
+        if(player.level == 5) {
+            ctx.drawImage(Resources.get('images/itens/key.png'), 0, -20);
+        } else if(player.level == 6){
+            allEnemies = [];
+            ctx.drawImage(Resources.get('images/itens/chest-close.png'), 200, 50);
+            ctx.drawImage(Resources.get('images/itens/key.png'), player.x, player.y - 50);
+
+            if((player.x >= 100 && player.x <= 300) && (player.y <= 140)) {
+                ctx.drawImage(Resources.get('images/itens/chest-open.png'), 200, 50);
+                ctx.drawImage(Resources.get('images/character/queen-down.png'), 200, 50);
+
+                ctx.font = 'bold 14pt Calibri';
+                ctx.globalAlpha = 0.80;
+                ctx.fillStyle = 'green';
+                ctx.fillRect(70, 250, 350, 200);
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = 'white';
+                ctx.fillText('PÁRABENS', 200, 330);
+                ctx.fillText('VOCÊ CONSEGUIU SALVAR A RAINHA', 100, 355);
+                ctx.font = 'italic 12pt Calibri';
+                ctx.fillStyle = 'white';
+                ctx.fillText('Aperte ENTER para jogar novamente', 117, 390);
+                player.winner = true;
+            }
+        }
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
@@ -106,15 +148,66 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [
-                'images/scenario/stone-block.png',   // Top row is water
-                'images/scenario/grass-block.png',   // Row 1 of 3 of stone
-                'images/scenario/grass-block.png',   // Row 2 of 3 of stone
-                'images/scenario/grass-block.png',   // Row 3 of 3 of stone
-                'images/scenario/grass-block.png',   // Row 1 of 2 of grass
-                'images/scenario/grass-forest-block.png'    // Row 2 of 2 of grass
-            ],
-            numRows = 6,
+        var rowImages = [];
+
+        // NIVEL 1 DESERTO - NIVEL 2 FLORESTA - NIVEL 3 CASTELO
+        if(player.level == 1) {
+            rowImages = [
+                'images/scenario/dirt-block.png',
+                'images/scenario/dirt-block.png',
+                'images/scenario/dirt-block.png',
+                'images/scenario/dirt-block.png',
+                'images/scenario/desert-block.png', 
+                'images/scenario/desert-block.png' 
+            ]
+        } else if(player.level == 2){
+            rowImages = [
+                'images/scenario/grass-forest-block.png',
+                'images/scenario/grass-block.png',
+                'images/scenario/dirt-block.png',
+                'images/scenario/dirt-block.png',
+                'images/scenario/dirt-block.png',
+                'images/scenario/dirt-block.png'
+            ]           
+        } else if(player.level == 3) {
+            rowImages = [
+                'images/scenario/plain-block.png',
+                'images/scenario/grass-block.png',
+                'images/scenario/grass-block.png',
+                'images/scenario/grass-block.png',
+                'images/scenario/grass-block.png',
+                'images/scenario/grass-forest-block.png'
+            ]
+        } else if(player.level == 4) {
+            rowImages = [
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/plain-block.png'
+            ]
+        } else if(player.level == 5) {
+            rowImages = [
+                'images/scenario/wood-block.png',
+                'images/scenario/wood-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png',
+                'images/scenario/stone-block.png'
+            ]
+        } else if(player.level == 6) {
+            rowImages = [
+                'images/scenario/wood-block.png',
+                'images/scenario/wood-block.png',
+                'images/scenario/wood-block.png',
+                'images/scenario/wood-block.png',
+                'images/scenario/wood-block.png',
+                'images/scenario/wood-block.png'
+            ]
+        }
+
+        var numRows = 6,
             numCols = 5,
             row, col;
         
@@ -139,6 +232,37 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+
+        // INFORMAÇÕES NA TELA
+        ctx.font = '14pt Arial';
+        ctx.strokeStyle = 'black';
+
+        ctx.drawImage(Resources.get('images/itens/life.png'), 10, 550);
+        ctx.strokeStyle = 'black';
+        ctx.fillStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeText('x', 50, 570);
+        ctx.strokeText(player.lives, 65, 570);
+        ctx.fillText('x', 50, 570);
+        ctx.fillText(player.lives, 65, 570);
+
+        ctx.drawImage(Resources.get('images/itens/money.png'), 410, 10);
+        ctx.strokeStyle = 'black';
+        ctx.fillStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeText(':', 445, 30);
+        ctx.strokeText(player.progress, 450, 32);
+        ctx.fillText(':', 445, 30);
+        ctx.fillText(player.progress, 450, 32);
+        
+        ctx.drawImage(Resources.get('images/itens/progress.png'), 440, 550);
+        ctx.strokeStyle = 'black';
+        ctx.fillStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.strokeText(':', 475, 570);
+        ctx.strokeText(player.level, 485, 571);
+        ctx.fillText(':', 475, 570);
+        ctx.fillText(player.level, 485, 571);
     }
 
     /* This function is called by the render function and is called on each game
@@ -171,6 +295,21 @@ var Engine = (function(global) {
             39: 'right',
             40: 'down'
         };
+
+        if (e.keyCode == 13) {
+            if (player.gameOver === true) {
+                player.x = 200;
+                player.y = 460;
+                player.collid = false;
+                player.lives = 3;
+                player.level = 1;
+                player.gameOver = false;
+                player.progress = 0;
+                allEnemies.push(enemyOne, enemyTwo, enemyThree, enemyFour);
+            } else if(player.winner === true) {
+                location.reload();
+            }
+        }
     
         player.handleInput(allowedKeys[e.keyCode]);
     });
@@ -181,10 +320,21 @@ var Engine = (function(global) {
      */
     Resources.load([
         //CENARIO
+        'images/scenario/wood-block.png',
+        'images/scenario/desert-block.png',
+        'images/scenario/dirt-block.png',
+        'images/scenario/plain-block.png',
         'images/scenario/stone-block.png',
-        'images/scenario/water-block.png',
         'images/scenario/grass-block.png',
         'images/scenario/grass-forest-block.png',
+        // ITENS
+        'images/itens/key.png',
+        'images/itens/chest-open.png',
+        'images/itens/chest-close.png',
+        'images/itens/life.png',
+        'images/itens/progress.png',
+        'images/itens/money.png',
+
         //INIMIGOS TROLLS
         'images/enemies/troll-1.png',
         'images/enemies/troll-2.png',
@@ -210,21 +360,23 @@ var Engine = (function(global) {
         'images/enemies/troll-boss-6.png',
         'images/enemies/troll-boss-7.png',
 
+        // GUERREIRO
         'images/character/boy-down.png',
         'images/character/boy-up.png',
         'images/character/boy-left.png',
         'images/character/boy-right.png',
-
+        // GUERREIRA
         'images/character/girl-down.png',
         'images/character/girl-up.png',
         'images/character/girl-left.png',
         'images/character/girl-right.png',
-
+        // REI
         'images/character/king-down.png',
         'images/character/king-up.png',
         'images/character/king-left.png',
-        'images/character/king-right.png'
-
+        'images/character/king-right.png',
+        // RAINHA
+        'images/character/queen-down.png'
     ]);
     Resources.onReady(init);
 
