@@ -277,6 +277,10 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        allObstacles.forEach(function(obstacle) {
+            obstacle.render();
+        });
+
         player.render();
     }
 
@@ -305,7 +309,7 @@ var Engine = (function(global) {
                 player.level = 1;
                 player.gameOver = false;
                 player.progress = 0;
-                allEnemies.push(enemyOne, enemyTwo, enemyThree, enemyFour);
+                allEnemies.push(enemyDirtOne, enemyDirtTwo, enemyDirtThree, enemyDirtFour);
             } else if(player.winner === true) {
                 location.reload();
             }
@@ -334,31 +338,72 @@ var Engine = (function(global) {
         'images/itens/life.png',
         'images/itens/progress.png',
         'images/itens/money.png',
+        'images/itens/rock.png',
 
-        //INIMIGOS TROLLS
-        'images/enemies/troll-1.png',
-        'images/enemies/troll-2.png',
-        'images/enemies/troll-3.png',
-        'images/enemies/troll-4.png',
-        'images/enemies/troll-5.png',
-        'images/enemies/troll-6.png',
-        'images/enemies/troll-7.png',
+        //INIMIGOS
+        'images/enemies/troll-man-1.png',
+        'images/enemies/troll-man-2.png',
+        'images/enemies/troll-man-3.png',
+        'images/enemies/troll-man-4.png',
+        'images/enemies/troll-man-5.png',
+        'images/enemies/troll-man-6.png',
+        'images/enemies/troll-man-7.png',
 
-        'images/enemies/troll-old-1.png',
-        'images/enemies/troll-old-2.png',
-        'images/enemies/troll-old-3.png',
-        'images/enemies/troll-old-4.png',
-        'images/enemies/troll-old-5.png',
-        'images/enemies/troll-old-6.png',
-        'images/enemies/troll-old-7.png',
+        'images/enemies/troll-woman-1.png',
+        'images/enemies/troll-woman-2.png',
+        'images/enemies/troll-woman-3.png',
+        'images/enemies/troll-woman-4.png',
+        'images/enemies/troll-woman-5.png',
+        'images/enemies/troll-woman-6.png',
+        'images/enemies/troll-woman-7.png',
 
-        'images/enemies/troll-boss-1.png',
-        'images/enemies/troll-boss-2.png',
-        'images/enemies/troll-boss-3.png',
-        'images/enemies/troll-boss-4.png',
-        'images/enemies/troll-boss-5.png',
-        'images/enemies/troll-boss-6.png',
-        'images/enemies/troll-boss-7.png',
+        'images/enemies/troll-ancient-1.png',
+        'images/enemies/troll-ancient-2.png',
+        'images/enemies/troll-ancient-3.png',
+        'images/enemies/troll-ancient-4.png',
+        'images/enemies/troll-ancient-5.png',
+        'images/enemies/troll-ancient-6.png',
+        'images/enemies/troll-ancient-7.png',
+
+        'images/enemies/troll-warrior-1.png',
+        'images/enemies/troll-warrior-2.png',
+        'images/enemies/troll-warrior-3.png',
+        'images/enemies/troll-warrior-4.png',
+        'images/enemies/troll-warrior-5.png',
+        'images/enemies/troll-warrior-6.png',
+        'images/enemies/troll-warrior-7.png',
+
+        'images/enemies/troll-worker-1.png',
+        'images/enemies/troll-worker-2.png',
+        'images/enemies/troll-worker-3.png',
+        'images/enemies/troll-worker-4.png',
+        'images/enemies/troll-worker-5.png',
+        'images/enemies/troll-worker-6.png',
+        'images/enemies/troll-worker-7.png',
+
+        'images/enemies/silver-warrior-1.png',
+        'images/enemies/silver-warrior-2.png',
+        'images/enemies/silver-warrior-3.png',
+        'images/enemies/silver-warrior-4.png',
+        'images/enemies/silver-warrior-5.png',
+        'images/enemies/silver-warrior-6.png',
+        'images/enemies/silver-warrior-7.png',
+
+        'images/enemies/bronze-warrior-1.png',
+        'images/enemies/bronze-warrior-2.png',
+        'images/enemies/bronze-warrior-3.png',
+        'images/enemies/bronze-warrior-4.png',
+        'images/enemies/bronze-warrior-5.png',
+        'images/enemies/bronze-warrior-6.png',
+        'images/enemies/bronze-warrior-7.png',
+
+        'images/enemies/gold-warrior-1.png',
+        'images/enemies/gold-warrior-2.png',
+        'images/enemies/gold-warrior-3.png',
+        'images/enemies/gold-warrior-4.png',
+        'images/enemies/gold-warrior-5.png',
+        'images/enemies/gold-warrior-6.png',
+        'images/enemies/gold-warrior-7.png',
 
         // GUERREIRO
         'images/character/boy-down.png',

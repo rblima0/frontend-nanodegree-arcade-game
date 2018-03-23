@@ -1,4 +1,14 @@
-// INIMIGO
+var Obstacle = function(x, y){
+    this.x = x;
+    this.y = y;
+    this.sprite = "images/itens/rock.png";
+}
+
+Obstacle.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// CLASSE DO INIMIGO
 var Enemy = function(x, y, originalY, velocity, enemyName) {
     this.x = x;
     this.y = y;
@@ -40,9 +50,7 @@ Enemy.prototype.reset = function() {
     }
 };
 
-
-
-// PLAYER
+// CLASSE DO JOGADOR
 var Player = function(x, y) {
     this.x = x;
     this.y = y;
@@ -59,19 +67,20 @@ var Player = function(x, y) {
 Player.prototype.update = function(dt) {
     this.collision(allEnemies);
 
-    if(player.y <= 0) {
+    if(this.y <= 0 && this.gameOver != true) {
         this.progress+=500;
         this.level++;
         this.x = 200;
         this.y = 460;     
         if(this.level == 7) {
+            this.progress-=500;
             this.level = 6;
         }
     }
 };
 
 Player.prototype.render = function() {
-    //randomEnemies();
+    this.randomEnemies();
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -116,17 +125,30 @@ Player.prototype.collision = function(enemyList){
             this.reset();
         }
     }
+
+    for (let i = 0; i < allObstacles.length; i++) {
+        const obstacle = allObstacles[i];
+        if(player.x == obstacle.x || player.y == obstacle.y) {
+
+        }
+    }
 }
 
 // INIMIGOS RANDOMICOS CONFORME O NIVEL
 Player.prototype.randomEnemies = function(){
-// DESERTO
-
-// FLORESTA
-
-// CASTELO
-
-// CASA
+    if(this.level == 2){
+        allEnemies = [];
+        allEnemies.push(enemyDirtOne, enemyDirtTwo, enemyDirtThree, enemyDirtFour);
+    } else if(this.level == 3) {
+        allEnemies = [];
+        allEnemies.push(enemyForestOne, enemyForestTwo, enemyForestThree, enemyForestFour);
+    } else if(this.level == 4) {
+        allEnemies = [];
+        allEnemies.push(enemyDoorsOne, enemyDoorsTwo, enemyDoorsThree, enemyDoorsFour);
+    } else if(this.level == 5) {
+        allEnemies = [];
+        allEnemies.push(enemyCastleOne, enemyCastleTwo, enemyCastleThree, enemyCastleFour);
+    }
 }
 
 // SELECIONANDO UM PERSONAGEM
@@ -148,13 +170,46 @@ $("#king").on("click", function(){
     $('.modalCharacter').css("display", "none");    
 });
 
-var allEnemies = [];
-var enemiesNames = ['troll-boss', 'troll-old', 'troll'];
-
 var player = new Player(200, 460);
-var enemyOne = new Enemy(-80, 60, 60, 80, enemiesNames[Math.floor(enemiesNames.length*Math.random())]);
-var enemyTwo = new Enemy(-80, 140, 140, 180, enemiesNames[Math.floor(enemiesNames.length*Math.random())]);
-var enemyThree = new Enemy(-80, 220, 220, 60, enemiesNames[Math.floor(enemiesNames.length*Math.random())]);
-var enemyFour = new Enemy(-80, 300, 300, 140, enemiesNames[Math.floor(enemiesNames.length*Math.random())]);
 
-allEnemies.push(enemyOne, enemyTwo, enemyThree, enemyFour);
+var allEnemies = [];
+var enemiesDesert = ['troll-worker', 'troll-man', 'troll-woman'];
+var enemiesForest = ['troll-warrior', 'troll-ancient', 'troll-woman'];
+var enemiesCastle = ['silver-warrior', 'bronze-warrior', 'gold-warrior'];
+
+// INIMIGOS DO NIVEL 1
+var enemyDesertOne = new Enemy(-80, 60, 60, 80, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+var enemyDesertTwo  = new Enemy(-80, 140, 140, 180, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+var enemyDesertThree  = new Enemy(-80, 220, 220, 60, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+var enemyDesertFour  = new Enemy(-80, 300, 300, 140, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+
+// INIMIGOS DO NIVEL 2
+var enemyDirtOne = new Enemy(-80, 60, 60, 80, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+var enemyDirtTwo  = new Enemy(-80, 140, 140, 180, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+var enemyDirtThree  = new Enemy(-80, 220, 220, 60, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+var enemyDirtFour  = new Enemy(-80, 300, 300, 140, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+
+// INIMIGOS DO NIVEL 3
+var enemyForestOne = new Enemy(-80, 60, 60, 60, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+var enemyForestTwo = new Enemy(-80, 140, 140, 190, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+var enemyForestThree = new Enemy(-80, 220, 220, 80, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+var enemyForestFour = new Enemy(-80, 300, 300, Math.random() * (200 - 140) + 140, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+
+// INIMIGOS DO NIVEL 4
+var enemyDoorsOne = new Enemy(-80, 60, 60, 200, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+var enemyDoorsTwo = new Enemy(-80, 140, 140, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+var enemyDoorsThree = new Enemy(-80, 220, 220, 60, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+var enemyDoorsFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+
+// INIMIGOS DO NIVEL 5
+var enemyCastleOne = new Enemy(-80, 60, 60, 200, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+var enemyCastleTwo = new Enemy(-80, 140, 140, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+var enemyCastleThree = new Enemy(-80, 220, 220, 60, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+var enemyCastleFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+
+allEnemies.push(enemyDesertOne, enemyDesertTwo, enemyDesertThree, enemyDesertFour);
+
+
+var allObstacles = [];
+var ObstacleOne = new Obstacle(300, 380);
+allObstacles.push(ObstacleOne);
