@@ -56,6 +56,7 @@ var Engine = (function(global) {
         if (player.lives === 0) {
             player.gameOver = true;
             allEnemies = [];
+            allItens = [];
             ctx.font = 'bold 14pt Calibri';
             ctx.globalAlpha = 0.80;
             ctx.fillStyle = 'black';
@@ -70,10 +71,11 @@ var Engine = (function(global) {
         }
 
         if(player.level == 5) {
-            ctx.drawImage(Resources.get('images/itens/key.png'), 0, -20);
+            ctx.drawImage(Resources.get('images/itens/key.png'), 200, -20);
         } else if(player.level == 6){
             allEnemies = [];
             allObstacles = [];
+            allItens = [];
             ctx.drawImage(Resources.get('images/itens/chest-close.png'), 200, 50);
             ctx.drawImage(Resources.get('images/itens/key.png'), player.x, player.y - 50);
 
@@ -236,6 +238,10 @@ var Engine = (function(global) {
             ctx.drawImage(Resources.get(allObstacles[i].sprite), allObstacles[i].left, allObstacles[i].top);
         }
 
+        for (var i = 0; i < allItens.length; i++) {
+            ctx.drawImage(Resources.get(allItens[i].sprite), allItens[i].left, allItens[i].top);
+        }
+
         renderEntities();
 
         // INFORMAÇÕES NA TELA
@@ -326,6 +332,7 @@ var Engine = (function(global) {
      */
     Resources.load([
         //CENARIO
+        'images/scenario/wall-block.png',
         'images/scenario/wood-block.png',
         'images/scenario/desert-block.png',
         'images/scenario/dirt-block.png',
@@ -341,6 +348,9 @@ var Engine = (function(global) {
         'images/itens/life.png',
         'images/itens/progress.png',
         'images/itens/money.png',
+        'images/itens/item-cash.png',
+        'images/itens/item-heart.png',
+        'images/itens/empty.png',
 
         //INIMIGOS
         'images/enemies/troll-man-1.png',

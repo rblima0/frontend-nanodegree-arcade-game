@@ -8,6 +8,19 @@ var Obstacle = function(x, y, width, height, sprite) {
     this.sprite = sprite;
 };
 
+var Item = function(x, y, width, height, sprite, progress, lives) {
+    this.left = x;
+    this.top = y;
+    this.right = x + width;
+    this.bottom = y + height;
+    this.width = width;
+    this.height = height;
+    this.sprite = sprite;
+    this.collected = false;
+    this.progress = progress;
+    this.lives = lives;
+}
+
 // CLASSE DO INIMIGO
 var Enemy = function(x, y, originalY, velocity, enemyName) {
     this.x = x;
@@ -107,6 +120,27 @@ Player.prototype.checkObstacles = function(obstacles) {
     return block;
 };
 
+Player.prototype.checkItens = function(itens) {
+
+    var playerUp = this.y;
+    var playerDown = this.y;
+    var playerRight = this.x;
+    var playerLeft = this.x;
+    
+    for (var i = 0; i < itens.length; i++) {
+        if (((playerUp <= itens[i].bottom) && (playerDown >= itens[i].top)) && 
+            ((playerLeft <= itens[i].right) && (playerRight >= itens[i].left))) {
+            itens[i].collected = true;
+            this.progress += itens[i].progress;
+            this.lives += itens[i].lives;
+            itens[i].progress = 0;
+            itens[i].lives = 0;
+            itens[i].sprite = 'images/itens/empty.png';
+            return true;
+        }
+    }
+};
+
 // FUNÇÃO DE MOVIMENTO DO PLAYER
 Player.prototype.handleInput = function(code) {
     var checkBlock = this.checkObstacles(allObstacles);
@@ -123,6 +157,8 @@ Player.prototype.handleInput = function(code) {
         this.sprite = "images/character/"+this.character+"-right.png";
         this.x += 100;
     }
+
+    this.checkItens(allItens);
 }
 
 // RESET
@@ -164,21 +200,28 @@ Player.prototype.randomEnemies = function(){
         allEnemies = [];
         allEnemies.push(enemyDirtOne, enemyDirtTwo, enemyDirtThree, enemyDirtFour);
         allObstacles = [];
-        allObstacles.push(rockDirtOne, rockDirtTwo, rockDirtThree);
+        allObstacles.push(rockDirtThree, rockDirtTwo, rockDirtOne);
+        allItens = [];
+        allItens.push(itemTwo, itemThree);
     } else if(this.level == 3) {
         allEnemies = [];
         allEnemies.push(enemyForestOne, enemyForestTwo, enemyForestThree, enemyForestFour);
         allObstacles = [];
+        allItens = [];
     } else if(this.level == 4) {
         allEnemies = [];
         allEnemies.push(enemyDoorsOne, enemyDoorsTwo, enemyDoorsThree, enemyDoorsFour);
         allObstacles = [];
-        allObstacles.push(rockDoorsOne, rockDoorsTwo, rockDoorsThree, rockDoorsFour, rockDoorsFive, rockDoorsSix);
+        allObstacles.push(wallOne, wallTwo, wallThree, wallFour, rockDoorsFour, rockDoorsThree, rockDoorsTwo, rockDoorsOne);
+        allItens = [];
+        allItens.push(itemFour);
     } else if(this.level == 5) {
         allEnemies = [];
         allEnemies.push(enemyCastleOne, enemyCastleTwo, enemyCastleThree, enemyCastleFour);
         allObstacles = [];
         allObstacles.push(rockCastleOne, rockCastleTwo, rockCastleThree, rockCastleFour);
+        allItens = [];
+        allItens.push(itemFive);
     }
 }
 
@@ -212,6 +255,7 @@ $("#close").on("click", function(e){
 
 var player = new Player(200, 460);
 
+// INIMIGOS
 var allEnemies = [];
 var enemiesDesert = ['troll-worker', 'troll-man', 'troll-woman'];
 var enemiesForest = ['troll-warrior', 'troll-ancient', 'troll-woman'];
@@ -249,20 +293,33 @@ var enemyCastleFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110
 
 allEnemies.push(enemyDesertOne, enemyDesertTwo, enemyDesertThree, enemyDesertFour);
 
+// OBSTACULOS
 var allObstacles = [];
 var rockDirtOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
 var rockDirtTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
 var rockDirtThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
 
-var rockDoorsOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/scenario/rock.png');
+var wallOne = new Obstacle(0, -20, 90, 60, 'images/scenario/wall-block.png');
+var wallTwo = new Obstacle(100, -20, 90, 60, 'images/scenario/wall-block.png');
+var wallThree = new Obstacle(302, -20, 90, 60, 'images/scenario/wall-block.png');
+var wallFour = new Obstacle(405, -20, 90, 60, 'images/scenario/wall-block.png');
+
+var rockDoorsOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
 var rockDoorsTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
-var rockDoorsThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
-var rockDoorsFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
-var rockDoorsFive = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
-var rockDoorsSix = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
-var rockDoorsSeven = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/scenario/rock.png');
+var rockDoorsThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
+var rockDoorsFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
 
 var rockCastleOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
 var rockCastleTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
 var rockCastleThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
 var rockCastleFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
+
+// ITENS
+allItens = [];
+var itemOne = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-cash.png', 150, 0);
+var itemTwo = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/itens/item-heart.png', 0, 1);
+var itemThree = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-cash.png', 150, 0);
+var itemFour = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-heart.png', 0, 1);
+var itemFive = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/itens/item-cash.png', 150, 0);
+
+allItens.push(itemOne);
