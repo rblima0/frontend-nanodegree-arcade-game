@@ -1,4 +1,5 @@
-var Obstacle = function(x, y, width, height, sprite) {
+// OBJETO OBSTACULO
+const Obstacle = function(x, y, width, height, sprite) {
     this.left = x;
     this.top = y;
     this.right = x + width;
@@ -8,7 +9,8 @@ var Obstacle = function(x, y, width, height, sprite) {
     this.sprite = sprite;
 };
 
-var Item = function(x, y, width, height, sprite, progress, lives) {
+// OBJETO ITEM
+const Item = function(x, y, width, height, sprite, progress, lives) {
     this.left = x;
     this.top = y;
     this.right = x + width;
@@ -16,13 +18,12 @@ var Item = function(x, y, width, height, sprite, progress, lives) {
     this.width = width;
     this.height = height;
     this.sprite = sprite;
-    this.collected = false;
     this.progress = progress;
     this.lives = lives;
 }
 
 // CLASSE DO INIMIGO
-var Enemy = function(x, y, originalY, velocity, enemyName) {
+const Enemy = function(x, y, originalY, velocity, enemyName) {
     this.x = x;
     this.y = y;
     this.originalY = originalY;
@@ -64,7 +65,7 @@ Enemy.prototype.reset = function() {
 };
 
 // CLASSE DO JOGADOR
-var Player = function(x, y) {
+const Player = function(x, y) {
     this.x = x;
     this.y = y;
     this.character = "boy";
@@ -100,13 +101,13 @@ Player.prototype.render = function() {
 // VERIFICA SE TEM OBSTACULOS PARA O PLAYER
 Player.prototype.checkObstacles = function(obstacles) {
 
-    var block = [];
-    var playerUp = this.y;
-    var playerDown = this.y + 72;
-    var playerRight = this.x + 67;
-    var playerLeft = this.x;
+    let block = [];
+    let playerUp = this.y;
+    let playerDown = this.y + 72;
+    let playerRight = this.x + 67;
+    let playerLeft = this.x;
     
-    for (var i = 0; i < obstacles.length; i++) {
+    for (let i = 0; i < obstacles.length; i++) {
         if (((playerUp - 80) < obstacles[i].bottom) && ((playerDown - 80) > obstacles[i].top) && (playerLeft < obstacles[i].right) && (playerRight > obstacles[i].left)) {
             block.push('up');
         } else if (((playerUp + 80) < obstacles[i].bottom) && ((playerDown + 80) > obstacles[i].top) && (playerLeft < obstacles[i].right) && (playerRight > obstacles[i].left)) {
@@ -122,15 +123,14 @@ Player.prototype.checkObstacles = function(obstacles) {
 
 Player.prototype.checkItens = function(itens) {
 
-    var playerUp = this.y;
-    var playerDown = this.y;
-    var playerRight = this.x;
-    var playerLeft = this.x;
+    let playerUp = this.y;
+    let playerDown = this.y;
+    let playerRight = this.x;
+    let playerLeft = this.x;
     
-    for (var i = 0; i < itens.length; i++) {
+    for (let i = 0; i < itens.length; i++) {
         if (((playerUp <= itens[i].bottom) && (playerDown >= itens[i].top)) && 
             ((playerLeft <= itens[i].right) && (playerRight >= itens[i].left))) {
-            itens[i].collected = true;
             this.progress += itens[i].progress;
             this.lives += itens[i].lives;
             itens[i].progress = 0;
@@ -143,7 +143,7 @@ Player.prototype.checkItens = function(itens) {
 
 // FUNÇÃO DE MOVIMENTO DO PLAYER
 Player.prototype.handleInput = function(code) {
-    var checkBlock = this.checkObstacles(allObstacles);
+    let checkBlock = this.checkObstacles(allObstacles);
     if((code === 'up') && (this.y > -20) && (checkBlock.indexOf('up') == -1)) {
         this.sprite = "images/character/"+this.character+"-up.png";
         this.y -= 80;
@@ -174,15 +174,15 @@ Player.prototype.reset = function() {
 Player.prototype.collision = function(enemyList){
     for (let i = 0; i < enemyList.length; i++) {
         
-        var playerUp = this.y;
-        var playerDown = this.y + 72;
-        var playerLeft = this.x;
-        var playerRight = this.x + 65;
+        let playerUp = this.y;
+        let playerDown = this.y + 72;
+        let playerLeft = this.x;
+        let playerRight = this.x + 65;
 
-        var enemyUp = enemyList[i].y;
-        var enemyDown = enemyList[i].y + 65;
-        var enemyLeft = enemyList[i].x;
-        var enemyRight = enemyList[i].x + 80;
+        let enemyUp = enemyList[i].y;
+        let enemyDown = enemyList[i].y + 65;
+        let enemyLeft = enemyList[i].x;
+        let enemyRight = enemyList[i].x + 80;
         
         if ((playerUp <= enemyDown) && (playerDown >= enemyUp) && (playerLeft <= enemyRight) && (playerRight >= enemyLeft)) {
             /* player.collid = true;
@@ -253,73 +253,73 @@ $("#close").on("click", function(e){
     $('.modalHistory').css("display", "none"); 
 });
 
-var player = new Player(200, 460);
+const player = new Player(200, 460);
 
 // INIMIGOS
-var allEnemies = [];
-var enemiesDesert = ['troll-worker', 'troll-man', 'troll-woman'];
-var enemiesForest = ['troll-warrior', 'troll-ancient', 'troll-woman'];
-var enemiesCastle = ['silver-warrior', 'bronze-warrior', 'gold-warrior'];
+let allEnemies = [];
+const enemiesDesert = ['troll-worker', 'troll-man', 'troll-woman'];
+const enemiesForest = ['troll-warrior', 'troll-ancient', 'troll-woman'];
+const enemiesCastle = ['silver-warrior', 'bronze-warrior', 'gold-warrior'];
 
 // INIMIGOS DO NIVEL 1
-var enemyDesertOne = new Enemy(-80, 60, 60, 80, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
-var enemyDesertTwo  = new Enemy(-80, 140, 140, 180, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
-var enemyDesertThree  = new Enemy(-80, 220, 220, 60, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
-var enemyDesertFour  = new Enemy(-80, 300, 300, 140, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDesertOne = new Enemy(-80, 60, 60, 80, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDesertTwo  = new Enemy(-80, 140, 140, 180, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDesertThree  = new Enemy(-80, 220, 220, 60, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDesertFour  = new Enemy(-80, 300, 300, 140, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
 
 // INIMIGOS DO NIVEL 2
-var enemyDirtOne = new Enemy(-80, 60, 60, 80, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
-var enemyDirtTwo  = new Enemy(-80, 140, 140, 180, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
-var enemyDirtThree  = new Enemy(-80, 220, 220, 60, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
-var enemyDirtFour  = new Enemy(-80, 300, 300, 140, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDirtOne = new Enemy(-80, 60, 60, 80, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDirtTwo  = new Enemy(-80, 140, 140, 180, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDirtThree  = new Enemy(-80, 220, 220, 60, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
+let enemyDirtFour  = new Enemy(-80, 300, 300, 140, enemiesDesert[Math.floor(enemiesDesert.length*Math.random())]);
 
 // INIMIGOS DO NIVEL 3
-var enemyForestOne = new Enemy(-80, 60, 60, 60, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
-var enemyForestTwo = new Enemy(-80, 140, 140, 190, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
-var enemyForestThree = new Enemy(-80, 220, 220, 80, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
-var enemyForestFour = new Enemy(-80, 300, 300, Math.random() * (200 - 140) + 140, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+let enemyForestOne = new Enemy(-80, 60, 60, 60, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+let enemyForestTwo = new Enemy(-80, 140, 140, 190, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+let enemyForestThree = new Enemy(-80, 220, 220, 80, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
+let enemyForestFour = new Enemy(-80, 300, 300, Math.random() * (200 - 140) + 140, enemiesForest[Math.floor(enemiesForest.length*Math.random())]);
 
 // INIMIGOS DO NIVEL 4
-var enemyDoorsOne = new Enemy(-80, 60, 60, 200, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
-var enemyDoorsTwo = new Enemy(-80, 140, 140, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
-var enemyDoorsThree = new Enemy(-80, 220, 220, 60, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
-var enemyDoorsFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyDoorsOne = new Enemy(-80, 60, 60, 200, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyDoorsTwo = new Enemy(-80, 140, 140, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyDoorsThree = new Enemy(-80, 220, 220, 60, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyDoorsFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
 
 // INIMIGOS DO NIVEL 5
-var enemyCastleOne = new Enemy(-80, 60, 60, 200, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
-var enemyCastleTwo = new Enemy(-80, 140, 140, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
-var enemyCastleThree = new Enemy(-80, 220, 220, 60, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
-var enemyCastleFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyCastleOne = new Enemy(-80, 60, 60, 200, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyCastleTwo = new Enemy(-80, 140, 140, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyCastleThree = new Enemy(-80, 220, 220, 60, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
+let enemyCastleFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110, enemiesCastle[Math.floor(enemiesCastle.length*Math.random())]);
 
 allEnemies.push(enemyDesertOne, enemyDesertTwo, enemyDesertThree, enemyDesertFour);
 
 // OBSTACULOS
-var allObstacles = [];
-var rockDirtOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
-var rockDirtTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
-var rockDirtThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
+let allObstacles = [];
+let rockDirtOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
+let rockDirtTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+let rockDirtThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
 
-var wallOne = new Obstacle(0, -20, 90, 60, 'images/scenario/wall-block.png');
-var wallTwo = new Obstacle(100, -20, 90, 60, 'images/scenario/wall-block.png');
-var wallThree = new Obstacle(302, -20, 90, 60, 'images/scenario/wall-block.png');
-var wallFour = new Obstacle(405, -20, 90, 60, 'images/scenario/wall-block.png');
+let wallOne = new Obstacle(0, -20, 90, 60, 'images/scenario/wall-block.png');
+let wallTwo = new Obstacle(100, -20, 90, 60, 'images/scenario/wall-block.png');
+let wallThree = new Obstacle(302, -20, 90, 60, 'images/scenario/wall-block.png');
+let wallFour = new Obstacle(405, -20, 90, 60, 'images/scenario/wall-block.png');
 
-var rockDoorsOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
-var rockDoorsTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
-var rockDoorsThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
-var rockDoorsFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+let rockDoorsOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
+let rockDoorsTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
+let rockDoorsThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
+let rockDoorsFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
 
-var rockCastleOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
-var rockCastleTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
-var rockCastleThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
-var rockCastleFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
+let rockCastleOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
+let rockCastleTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+let rockCastleThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+let rockCastleFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
 
 // ITENS
 allItens = [];
-var itemOne = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-cash.png', 150, 0);
-var itemTwo = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/itens/item-heart.png', 0, 1);
-var itemThree = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-cash.png', 150, 0);
-var itemFour = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-heart.png', 0, 1);
-var itemFive = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/itens/item-cash.png', 150, 0);
+let itemOne = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-cash.png', 150, 0);
+let itemTwo = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/itens/item-heart.png', 0, 1);
+let itemThree = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-cash.png', 150, 0);
+let itemFour = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/itens/item-heart.png', 0, 1);
+let itemFive = new Item(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/itens/item-cash.png', 150, 0);
 
 allItens.push(itemOne);

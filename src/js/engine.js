@@ -89,11 +89,13 @@ var Engine = (function(global) {
                 ctx.fillRect(70, 250, 350, 200);
                 ctx.globalAlpha = 1;
                 ctx.fillStyle = 'white';
-                ctx.fillText('PÁRABENS', 200, 330);
-                ctx.fillText('VOCÊ CONSEGUIU SALVAR A RAINHA', 100, 355);
+                ctx.fillText('PÁRABENS', 200, 290);
+                ctx.fillText('VOCÊ CONSEGUIU SALVAR A RAINHA', 100, 315);
+                ctx.fillText('Pontuação', 200, 345);
+                ctx.fillText(player.progress, 220, 365);
                 ctx.font = 'italic 12pt Calibri';
                 ctx.fillStyle = 'white';
-                ctx.fillText('Aperte ENTER para jogar novamente', 117, 390);
+                ctx.fillText('Aperte ENTER para jogar novamente', 117, 395);
                 player.winner = true;
             }
         }
@@ -151,7 +153,7 @@ var Engine = (function(global) {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
-        var rowImages = [];
+        let rowImages = [];
 
         // NIVEL 1 DESERTO - NIVEL 2 FLORESTA - NIVEL 3 CASTELO
         if(player.level == 1) {
@@ -210,7 +212,7 @@ var Engine = (function(global) {
             ]
         }
 
-        var numRows = 6,
+        let numRows = 6,
             numCols = 5,
             row, col;
         
@@ -234,11 +236,11 @@ var Engine = (function(global) {
             }
         }
 
-        for (var i = 0; i < allObstacles.length; i++) {
+        for (let i = 0; i < allObstacles.length; i++) {
             ctx.drawImage(Resources.get(allObstacles[i].sprite), allObstacles[i].left, allObstacles[i].top);
         }
 
-        for (var i = 0; i < allItens.length; i++) {
+        for (let i = 0; i < allItens.length; i++) {
             ctx.drawImage(Resources.get(allItens[i].sprite), allItens[i].left, allItens[i].top);
         }
 
