@@ -1,11 +1,11 @@
-var Obstacle = function(x, y){
-    this.x = x;
-    this.y = y;
-    this.sprite = "images/itens/rock.png";
-}
-
-Obstacle.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+var Obstacle = function(x, y, width, height, sprite) {
+    this.left = x;
+    this.top = y;
+    this.right = x + width;
+    this.bottom = y + height;
+    this.width = width;
+    this.height = height;
+    this.sprite = sprite;
 };
 
 // CLASSE DO INIMIGO
@@ -84,22 +84,48 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// VERIFICA SE TEM OBSTACULOS PARA O PLAYER
+Player.prototype.checkObstacles = function(obstacles) {
+
+    var block = [];
+    var playerUp = this.y;
+    var playerDown = this.y + 72;
+    var playerRight = this.x + 67;
+    var playerLeft = this.x;
+    
+    for (var i = 0; i < obstacles.length; i++) {
+        if (((playerUp - 80) < obstacles[i].bottom) && ((playerDown - 80) > obstacles[i].top) && (playerLeft < obstacles[i].right) && (playerRight > obstacles[i].left)) {
+            block.push('up');
+        } else if (((playerUp + 80) < obstacles[i].bottom) && ((playerDown + 80) > obstacles[i].top) && (playerLeft < obstacles[i].right) && (playerRight > obstacles[i].left)) {
+            block.push('down');
+        } else if ((playerUp < obstacles[i].bottom) && (playerDown > obstacles[i].top) && ((playerLeft - 50) < obstacles[i].right) && ((playerRight - 50) > obstacles[i].left)) {
+            block.push('left');
+        } else if ((playerUp < obstacles[i].bottom) && (playerDown > obstacles[i].top) && ((playerLeft + 50) < obstacles[i].right) && ((playerRight + 50) > obstacles[i].left)) {
+            block.push('right');
+        }
+    }
+    return block;
+};
+
+// FUNÇÃO DE MOVIMENTO DO PLAYER
 Player.prototype.handleInput = function(code) {
-    if((code === 'up') && (this.y > -15)) {
+    var checkBlock = this.checkObstacles(allObstacles);
+    if((code === 'up') && (this.y > -20) && (checkBlock.indexOf('up') == -1)) {
         this.sprite = "images/character/"+this.character+"-up.png";
         this.y -= 80;
-    } else if ((code === 'down') && (this.y < 400)) {
+    } else if ((code === 'down') && (this.y < 460) && (checkBlock.indexOf('down') == -1)) {
         this.sprite = "images/character/"+this.character+"-down.png";
         this.y += 80;
-    } else if((code === 'left') && (this.x > 0)) {
+    } else if((code === 'left') && (this.x > 0) && (checkBlock.indexOf('left') == -1)) {
         this.sprite = "images/character/"+this.character+"-left.png";
         this.x -= 100;
-    } else if((code === 'right') && (this.x < 400)) {
+    } else if((code === 'right') && (this.x < 400) && (checkBlock.indexOf('right') == -1)) {
         this.sprite = "images/character/"+this.character+"-right.png";
         this.x += 100;
     }
 }
 
+// RESET
 Player.prototype.reset = function() {
     this.progress-=100;
     this.x = 200;
@@ -125,13 +151,6 @@ Player.prototype.collision = function(enemyList){
             this.reset();
         }
     }
-
-    for (let i = 0; i < allObstacles.length; i++) {
-        const obstacle = allObstacles[i];
-        if(player.x == obstacle.x || player.y == obstacle.y) {
-
-        }
-    }
 }
 
 // INIMIGOS RANDOMICOS CONFORME O NIVEL
@@ -139,15 +158,22 @@ Player.prototype.randomEnemies = function(){
     if(this.level == 2){
         allEnemies = [];
         allEnemies.push(enemyDirtOne, enemyDirtTwo, enemyDirtThree, enemyDirtFour);
+        allObstacles = [];
+        allObstacles.push(rockDirtOne, rockDirtTwo, rockDirtThree);
     } else if(this.level == 3) {
         allEnemies = [];
         allEnemies.push(enemyForestOne, enemyForestTwo, enemyForestThree, enemyForestFour);
+        allObstacles = [];
     } else if(this.level == 4) {
         allEnemies = [];
         allEnemies.push(enemyDoorsOne, enemyDoorsTwo, enemyDoorsThree, enemyDoorsFour);
+        allObstacles = [];
+        allObstacles.push(rockDoorsOne, rockDoorsTwo, rockDoorsThree, rockDoorsFour, rockDoorsFive, rockDoorsSix);
     } else if(this.level == 5) {
         allEnemies = [];
         allEnemies.push(enemyCastleOne, enemyCastleTwo, enemyCastleThree, enemyCastleFour);
+        allObstacles = [];
+        allObstacles.push(rockCastleOne, rockCastleTwo, rockCastleThree, rockCastleFour);
     }
 }
 
@@ -209,7 +235,20 @@ var enemyCastleFour = new Enemy(-80, 300, 300, Math.random() * (200 - 110) + 110
 
 allEnemies.push(enemyDesertOne, enemyDesertTwo, enemyDesertThree, enemyDesertFour);
 
-
 var allObstacles = [];
-var ObstacleOne = new Obstacle(300, 380);
-allObstacles.push(ObstacleOne);
+var rockDirtOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
+var rockDirtTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+var rockDirtThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
+
+var rockDoorsOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/scenario/rock.png');
+var rockDoorsTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
+var rockDoorsThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 140, 90, 60, 'images/scenario/rock.png');
+var rockDoorsFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
+var rockDoorsFive = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
+var rockDoorsSix = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+var rockDoorsSeven = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 60, 90, 60, 'images/scenario/rock.png');
+
+var rockCastleOne = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 220, 90, 60, 'images/scenario/rock.png');
+var rockCastleTwo = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+var rockCastleThree = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 300, 90, 60, 'images/scenario/rock.png');
+var rockCastleFour = new Obstacle(Math.floor(Math.random() * (4 - 0)) * 100, 380, 90, 60, 'images/scenario/rock.png');
