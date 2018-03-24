@@ -131,6 +131,7 @@ Player.prototype.reset = function() {
     this.x = 200;
     this.y = 460;
     this.lives--;
+    this.collid = false;
 };
 
 // CHECANDO A COLISÃO
@@ -148,6 +149,10 @@ Player.prototype.collision = function(enemyList){
         var enemyRight = enemyList[i].x + 80;
         
         if ((playerUp <= enemyDown) && (playerDown >= enemyUp) && (playerLeft <= enemyRight) && (playerRight >= enemyLeft)) {
+            /* player.collid = true;
+            if(player.collid === true){
+                ctx.drawImage(Resources.get('images/character/boy-down.png'), player.x - 10, player.y - 10);
+            }  */           
             this.reset();
         }
     }
@@ -194,6 +199,15 @@ $("#king").on("click", function(){
     player.sprite = "images/character/king-down.png";
     player.character = 'king';
     $('.modalCharacter').css("display", "none");    
+});
+
+// MODAL DA HISTORIA
+$("#modalHistory").on("click", function(e){
+    $('.modalHistory').css("display", "block");  
+});
+
+$("#close").on("click", function(e){
+    $('.modalHistory').css("display", "none"); 
 });
 
 var player = new Player(200, 460);

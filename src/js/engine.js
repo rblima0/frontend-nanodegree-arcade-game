@@ -251,14 +251,14 @@ var Engine = (function(global) {
         ctx.fillText('x', 50, 570);
         ctx.fillText(player.lives, 65, 570);
 
-        ctx.drawImage(Resources.get('images/itens/money.png'), 410, 10);
+        ctx.drawImage(Resources.get('images/itens/money.png'), 410, 60);
         ctx.strokeStyle = 'black';
         ctx.fillStyle = 'white';
         ctx.lineWidth = 2;
-        ctx.strokeText(':', 445, 30);
-        ctx.strokeText(player.progress, 450, 32);
-        ctx.fillText(':', 445, 30);
-        ctx.fillText(player.progress, 450, 32);
+        ctx.strokeText(':', 445, 80);
+        ctx.strokeText(player.progress, 450, 82);
+        ctx.fillText(':', 445, 80);
+        ctx.fillText(player.progress, 450, 82);
         
         ctx.drawImage(Resources.get('images/itens/progress.png'), 440, 550);
         ctx.strokeStyle = 'black';
