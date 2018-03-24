@@ -70,6 +70,7 @@ var Engine = (function(global) {
             ctx.fillText('Aperte ENTER para tentar novamente', 117, 340);
         }
 
+        // ETAPA FINAL DO GAME
         if(player.level == 5) {
             ctx.drawImage(Resources.get('images/itens/key.png'), 200, -20);
         } else if(player.level == 6){

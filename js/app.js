@@ -35,6 +35,7 @@ const Enemy = function(x, y, originalY, velocity, enemyName) {
     this.enemyName = enemyName;
 };
 
+// ATUALIZA POSIÇÃO DOS INIMIGOS E DA MOVIMENTOS PARA ELES
 Enemy.prototype.update = function(dt) {
     if (this.x < 470) {
         if ((parseInt(this.x % 10)) === 0) {
@@ -121,6 +122,7 @@ Player.prototype.checkObstacles = function(obstacles) {
     return block;
 };
 
+// VERIFICA SE TEM ITERAÇÃO DO PLAYER COM ITENS
 Player.prototype.checkItens = function(itens) {
 
     let playerUp = this.y;
@@ -184,11 +186,7 @@ Player.prototype.collision = function(enemyList){
         let enemyLeft = enemyList[i].x;
         let enemyRight = enemyList[i].x + 80;
         
-        if ((playerUp <= enemyDown) && (playerDown >= enemyUp) && (playerLeft <= enemyRight) && (playerRight >= enemyLeft)) {
-            /* player.collid = true;
-            if(player.collid === true){
-                ctx.drawImage(Resources.get('images/character/boy-down.png'), player.x - 10, player.y - 10);
-            }  */           
+        if ((playerUp <= enemyDown) && (playerDown >= enemyUp) && (playerLeft <= enemyRight) && (playerRight >= enemyLeft)) {     
             this.reset();
         }
     }
@@ -253,6 +251,7 @@ $("#close").on("click", function(e){
     $('.modalHistory').css("display", "none"); 
 });
 
+// CRIANDO OBJETOS
 const player = new Player(200, 460);
 
 // INIMIGOS
