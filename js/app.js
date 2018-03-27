@@ -1,3 +1,13 @@
+// SUPERCLASSE
+const Character = function(x, y){
+    this.x = x;
+    this.y = y;
+}
+
+Character.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 // OBJETO OBSTACULO
 const Obstacle = function(x, y, width, height, sprite) {
     this.left = x;
@@ -24,8 +34,7 @@ const Item = function(x, y, width, height, sprite, progress, lives) {
 
 // CLASSE DO INIMIGO
 const Enemy = function(x, y, originalY, velocity, enemyName) {
-    this.x = x;
-    this.y = y;
+    Character.call(this, x, y);
     this.originalY = originalY;
     this.velocity = velocity;
     this.sprite = "images/enemies/"+this.enemyName+"-"+this.position+".png";
@@ -34,6 +43,8 @@ const Enemy = function(x, y, originalY, velocity, enemyName) {
     this.collid = false;
     this.enemyName = enemyName;
 };
+
+Enemy.prototype = new Character();
 
 // ATUALIZA POSIÇÃO DOS INIMIGOS E DA MOVIMENTOS PARA ELES
 Enemy.prototype.update = function(dt) {
@@ -53,10 +64,6 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 Enemy.prototype.reset = function() {
     if (this.x > 470) {
         this.x = Math.random() * -80;
@@ -67,8 +74,7 @@ Enemy.prototype.reset = function() {
 
 // CLASSE DO JOGADOR
 const Player = function(x, y) {
-    this.x = x;
-    this.y = y;
+    Character.call(this, x, y);
     this.character = "boy";
     this.sprite = "images/character/"+this.character+"-down.png";
     this.collid = false;
@@ -79,8 +85,9 @@ const Player = function(x, y) {
     this.progress = 0;
 };
 
+Player.prototype = new Character();
+
 Player.prototype.update = function(dt) {
-    this.collision(allEnemies);
 
     if(this.y <= 0 && this.gameOver != true) {
         this.progress+=500;
@@ -92,11 +99,6 @@ Player.prototype.update = function(dt) {
             this.level = 6;
         }
     }
-};
-
-Player.prototype.render = function() {
-    this.randomEnemies();
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // VERIFICA SE TEM OBSTACULOS PARA O PLAYER
@@ -144,8 +146,8 @@ Player.prototype.checkItens = function(itens) {
 };
 
 // FUNÇÃO DE MOVIMENTO DO PLAYER
-Player.prototype.handleInput = function(code) {
-    let checkBlock = this.checkObstacles(allObstacles);
+Player.prototype.handleInput = function(code, checkBlock) {
+    
     if((code === 'up') && (this.y > -20) && (checkBlock.indexOf('up') == -1)) {
         this.sprite = "images/character/"+this.character+"-up.png";
         this.y -= 80;
@@ -160,7 +162,6 @@ Player.prototype.handleInput = function(code) {
         this.x += 100;
     }
 
-    this.checkItens(allItens);
 }
 
 // RESET

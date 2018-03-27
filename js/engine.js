@@ -127,7 +127,8 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        player.collision(allEnemies);
+        player.checkItens(allItens);
     }
 
     /* This is called by the update function and loops through all of the
@@ -138,9 +139,11 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+
         player.update();
     }
 
@@ -291,6 +294,7 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        player.randomEnemies();
         player.render();
     }
 
@@ -326,7 +330,9 @@ var Engine = (function(global) {
             }
         }
     
-        player.handleInput(allowedKeys[e.keyCode]);
+        let checkBlock = player.checkObstacles(allObstacles);
+        player.handleInput(allowedKeys[e.keyCode], checkBlock);
+        
     });
 
     /* Go ahead and load all of the images we know we're going to need to
