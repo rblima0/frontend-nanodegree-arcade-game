@@ -14,9 +14,9 @@ O jogador pode se mover para a esquerda, para a direita, para cima e para baixo,
 
 ### Creditos
 
-https://craftpix.net/ (inimigos do game);
-https://www.flaticon.com (alguns itens);
-[rubric](https://review.udacity.com/#!/projects/2696458597/rubric) (especificações do projeto)
-Para instruções detalhadas sobre como começar, confira este [guia](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+* https://craftpix.net/ (inimigos do game);
+* https://www.flaticon.com (alguns itens);
+* [rubrica](https://review.udacity.com/#!/projects/2696458597/rubric) (especificações do projeto)
+* Para instruções detalhadas sobre como começar, confira este [guia](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
 
-Fique a vontade para baixar meu codigo e altera-lo como achar melhor.
+Fique a vontade para baixar o codigo e altera-lo como desejar.
